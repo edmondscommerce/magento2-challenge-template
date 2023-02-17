@@ -1,0 +1,6 @@
+#!/bin/bash
+
+alias php='XDEBUG_MODE=off php'
+alias phpx='php'
+alias magento='XDEBUG_MODE=off php /app/bin/magento'
+alias ll='ls -haltr'
