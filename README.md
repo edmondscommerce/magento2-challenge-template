@@ -41,7 +41,10 @@ To handle this you need to do the following:
 * Startup the containers `docker-compose up -d`
 * Install dependencies with Composer
     - Shell into the container `docker-compose exec app bash`
-    - Run `composer install` and `php bin/magento setup:upgrade`
+    - Run `composer install`
+* Setup the database
+    - Run `php bin/magento module:enable --all` to create the initial config.php file
+    - Run `php bin/magento setup:upgrade` to install magento and the sample data
 
 Magento will be setup with sample data and can be accessed at [https://localhost:8008]() with a self-signed certificate.
 Admin is accessible at [https://localhost:8008/admin]() with a username of `admin` and password `123123q`
