@@ -11,10 +11,10 @@ Whilst you can complete this challenge in any of the three main operating system
 Internally at Edmondscommerce we use Fedora as our preferred Linux distribution.
 
 Docker and Docker compose (for Windows, Mac or Linux).
-[Install Linux Docker Engine](https://docs.docker.com/engine/install/)
-[Install Linux Docker Compose Plugin](https://docs.docker.com/compose/install/linux/)
-[Windows](https://docs.docker.com/desktop/install/windows-install/)
-[Mac](https://docs.docker.com/desktop/install/mac-install/)
+* [Install Linux Docker Engine](https://docs.docker.com/engine/install/)
+* [Install Linux Docker Compose Plugin](https://docs.docker.com/compose/install/linux/)
+* [Windows](https://docs.docker.com/desktop/install/windows-install/)
+* [Mac](https://docs.docker.com/desktop/install/mac-install/)
 
 **Note: You must install the Docker Compose plugin or equivalent for your operating system**
 
