@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+    app:
+        build:
+            context: .docker/app
+            dockerfile: Dockerfile
+        expose:
+            - "9003"
+        depends_on:
+            - mysql
+        volumes:
+            - ./:/app
+        env_file: .docker/app/.env
+
+    nginx:
+        image: nginx:alpine
+        ports:
+          - "8008:443"
+        depends_on:
+            - app
+        volumes:
+            - ./:/app
+            - .docker/nginx/conf.d:/etc/nginx/conf.d
+            - .docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+            - .docker/nginx/fastcgi_params:/etc/nginx/fastcgi_params
+            - .docker/nginx/includes:/etc/nginx/includes
+            - .docker/nginx/ssl:/etc/nginx/ssl
+
+    redis:
+        image: redis:6.2
+
+    # Be sure to run if you encounter an error: `sudo sysctl -w vm.max_map_count=262144`
+    elastic:
+        image: elasticsearch:7.17.5
+        expose:
+            - "9200"
+            - "9300"
+        volumes:
+            - elastic_data:/usr/share/elasticsearch/data
+        environment:
+            - "discovery.type=single-node"
+            - "ES_JAVA_OPTS=-Xms4g -Xmx4g"
+        labels:
+            traefik.enable: false
+
+    mysql:
+      image: mariadb:10.4
+      volumes:
+        - mysql_data:/var/lib/mysql
+        - .docker/mysql/conf.d/:/etc/mysql/conf.d/
+        - .docker/mysql/sql:/sql
+        - .docker/mysql/root/.my.cnf:/root/.my.cnf
+        - .docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      expose:
+        - "3306"
+      environment:
+        MYSQL_ROOT_PASSWORD: "234234q!"
+        MYSQL_ROOT_HOST: "%"
+      labels:
+        traefik.enable: false
+      cap_add:
+        # Mysql likes to change its nice priority which causes an error within Docker
+        - SYS_NICE
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        expose:
+            - 443
+        environment:
+            MYSQL_ROOT_PASSWORD: 234234q!
+            PMA_HOST: mysql
+
+volumes:
+    mysql_data:
+    elastic_data:
