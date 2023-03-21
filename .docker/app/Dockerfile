@@ -5,10 +5,9 @@ RUN apt-get update
 
 
 # PHP dependencies
-RUN apt-get install -y zip libzip-dev procps htop libmcrypt-dev libjpeg-dev \
-      git libicu-dev libgmp-dev wget libxml2-dev libwebp-dev \
+RUN apt-get install -y zip unzip libzip-dev procps htop libmcrypt-dev libjpeg-dev \
+     zlib1g-dev git libicu-dev libgmp-dev wget libxml2-dev libxslt1-dev libwebp-dev \
      libjpeg62-turbo-dev libpng-dev libxpm-dev libfreetype6-dev libgd-dev libbz2-dev
-RUN apt-get install -y libxslt1-dev zlib1g-dev unzip
 
 # GD Module with Freetype
 RUN docker-php-ext-configure gd --with-external-gd \
